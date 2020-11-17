@@ -75,11 +75,11 @@ classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
             ...req.body
         });
         await classs.save();
-
+        console.log(req.body.teacherId + Class._id)
 
         const enroled = new Enroled({
-            teacherId = req.body.teacherId,
-            classId = Class._id
+            teacherId: req.body.teacherId,
+            classId: Class._id
         })
         await enroled.save();
 

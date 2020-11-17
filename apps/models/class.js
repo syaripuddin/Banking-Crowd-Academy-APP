@@ -14,7 +14,7 @@ const classSchema = new mongoose.Schema({
         required: [true, "Please input class detail!"]
     },
     classPhoto: {
-        typpe: String,
+        type: String,
         required: [true, "Please upload class photo!"]
     },
     classStatus: {
@@ -36,4 +36,3 @@ const classSchema = new mongoose.Schema({
 const Class = mongoose.model('Class', classSchema);
 
 module.exports = Class;
-df

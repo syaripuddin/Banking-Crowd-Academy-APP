@@ -27,7 +27,7 @@ app.use(morgan("dev"));
 
 //controller 
 app.use(userRouter);
-app.use(classRouter);
+//app.use(classRouter);
 app.use(topicRouter);
 app.use(enrolClassRouter);
 
@@ -43,7 +43,7 @@ const Checkverify = (...statususer) => {
 
 
 //for home page
-app.get('/', auth, Checkverify(true), (req, res, next) => {
+app.get('/home', auth, Checkverify(true), (req, res, next) => {
     res.json({
         message: 'homepage'
     })
@@ -52,9 +52,9 @@ app.get('/', auth, Checkverify(true), (req, res, next) => {
 })
 
 //for render login page
-app.get('/login', function(req, res) {
+app.get('/', function(req, res) {
     res.json({
-            message: 'login'
+            message: 'Welcome to Banking-Crowd-Academy-APP Please Login'
         })
         // res.render('pages/login');
 });
