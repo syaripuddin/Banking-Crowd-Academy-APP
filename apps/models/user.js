@@ -51,11 +51,11 @@ const userSchema = new mongoose.Schema({
     },
     passwordConfirm: {
         type: String,
-        required: [false, "Please confirm your password"],
+        required: [true, "Please confirm your password"],
         validate(value) {
             // This only works on CREATE and SAVE!!!
             if (this.password !== this.passwordConfirm) {
-                return true;
+                throw Error("Please check password != passwordConfirm !");
             }
         },
     },
