@@ -18,7 +18,7 @@ const checkRole = (...roles) => { //...spread operator extrak isi array
 };
 
 //get id learner
-enrolClassRouter.get("/users", auth, checkRole("learner"), async(req, res) => {
+enrolClassRouter.get("/users/learner", auth, checkRole("learner"), async(req, res) => {
     const users = await User.find({});
     try {
         users.length === 0 ? res.status(404).send() : res.send(users);
@@ -28,7 +28,7 @@ enrolClassRouter.get("/users", auth, checkRole("learner"), async(req, res) => {
 });
 
 //get id teacher
-enrolClassRouter.get("/users", auth, checkRole("teacher"), async(req, res) => {
+enrolClassRouter.get("/users/teacher", auth, checkRole("teacher"), async(req, res) => {
     const users = await User.find({});
     try {
         users.length === 0 ? res.status(404).send() : res.send(users);
