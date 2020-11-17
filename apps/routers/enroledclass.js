@@ -10,7 +10,7 @@ const enrolClassRouter = express.Router();
 const checkRole = (...roles) => { //...spread operator extrak isi array 
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return res.sendy(403) // error fobbriden
+            return res.send(403) // error fobbriden
         }
 
         next();
