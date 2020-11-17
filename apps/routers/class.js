@@ -87,10 +87,10 @@ classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
             message: "Created class successfully",
             Createdclass: {
                 _id: Class._id,
-                classname: Class.classname,
-                classdetail: Class.classdetail,
-                classstart: Class.classstart,
-                classend: Class.classend,
+                classname: Class.className,
+                classdetail: Class.classDetail,
+                classstart: Class.classStart,
+                classend: Class.classEnd,
                 classphoto: {
                     type: 'GET',
                     url: "http://localhost:3000/class/" + classname._id
@@ -106,7 +106,7 @@ classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
 // Update class by ID for teacher
 classRouter.patch("/class/:id", auth, checkRole('teacher'), async(req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["classname", "classdetail", "classstart", "classend", "classphoto", ];
+    const allowedUpdates = ["className", "classDetail", "classStart", "classEnd", "classPhoto", ];
     const isValidOperation = updates.every((update) =>
         allowedUpdates.includes(update)
     );

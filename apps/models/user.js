@@ -5,17 +5,17 @@ const jwt = require("jsonwebtoken");
 
 
 const userSchema = new mongoose.Schema({
-    firstname: {
+    firstName: {
         type: String,
         trim: true,
         required: [true, "Please tell your first name!"],
     },
-    lastname: {
+    lastName: {
         type: String,
         trim: true,
         required: [true, "Please tell your last name!"],
     },
-    photoprofile: {
+    photoProfile: {
         type: String,
         trim: true,
         //required: [true, "Please upload your photo profile!"],
@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema({
             required: true,
         },
     }, ],
-    statususer: {
+    statusUser: {
         type: Boolean,
         default: false,
     },

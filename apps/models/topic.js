@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 
 
 const topicSchema = new mongoose.Schema({
-    classid: {
+    classId: {
         type: String
     },
-    topicname: {
+    topicName: {
         type: String,
         required: [true, "Please input topic name!"]
     },
-    topicdetail: {
+    topicDetail: {
         type: String,
         required: [true, "Please input topic detail!"]
     },
-    topicdocument: {
+    topicDocument: {
         type: String,
     },
 

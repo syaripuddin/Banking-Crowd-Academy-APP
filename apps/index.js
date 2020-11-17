@@ -3,7 +3,7 @@ const morgan = require("morgan");
 require("./databases/database");
 const userRouter = require("./routers/user");
 const bodyParser = require("body-parser");
-const auth = require("../middleware/auth");
+const auth = require("./middleware/auth");
 
 //app assign express
 const app = express();

@@ -44,13 +44,16 @@ router.post("/users/login", async(req, res) => {
 });
 
 // User Logout
+
 router.post("/users/logout", auth, async(req, res) => {
     try {
+
+
         req.user.tokens = req.user.tokens.filter(
             (token) => token.token !== req.user.token
         );
         await req.user.save();
-        res.status(201).send("success logout:", { user, token });
+        res.status(200).send("success logout");
     } catch (err) {
         res.status(500).send("invalid token");
     }
@@ -61,7 +64,7 @@ router.post("/users/logoutAll", auth, async(req, res) => {
     try {
         req.user.tokens = [];
         await req.user.save();
-        res.send();
+        res.status(200).send("success logout all token deleted");
     } catch (err) {
         res.status(500).send();
     }
@@ -95,8 +98,9 @@ router.get("/users/:id", async(req, res) => {
 
 // Update current user
 router.patch("/users/me", auth, async(req, res) => {
+
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["name", "email", "password"];
+    const allowedUpdates = ["firstName", "lastName", "password", "passwordConfrim", "email", "photoProfile"];
     const isValidOperation = updates.every((update) =>
         allowedUpdates.includes(update)
     );
@@ -115,33 +119,24 @@ router.patch("/users/me", auth, async(req, res) => {
     }
 });
 
-// Update user by ID
-router.patch("/users/:id", auth, async(req, res) => {
+// Update user by ID for admin
+router.patch("/users/:id", auth, CheckRole('admin'), async(req, res) => {
+
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["firstname", "lastname", "password", "email", "photoprofile"];
+    const allowedUpdates = ["statusUser", "role", "verification"];
     const isValidOperation = updates.every((update) =>
         allowedUpdates.includes(update)
     );
     if (!isValidOperation) {
-        return res.status(400).send();
+        return res.status(400).send(); // eeror not allwed
     }
-
     try {
         const user = await User.findById(req.params.id);
-        updates.forEach((update) => (user[update] = req.body[update]));
-
+        updates.forEach((update) => {
+            user[update] = req.body[update];
+        });
         await user.save();
-        user ? res.status(200).send(user) : res.status(404).send();
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
-
-// Delete current user
-router.delete("/users/me", auth, async(req, res) => {
-    const user = await User.findByIdAndDelete(req.user._id);
-    try {
-        res.status(204).send("user deleted");
+        res.status(200).send(user);
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -151,10 +146,37 @@ router.delete("/users/me", auth, async(req, res) => {
 router.delete("/users/:id", auth, CheckRole("admin"), async(req, res) => {
     const user = await User.findByIdAndDelete(req.params.id);
     try {
-        user ? res.status(204).send(user) : res.status(404).send("user Not Found");
+        user ? res.status(204).send("success deleted : " + req.params.id) : res.status(404).send("user Not Found :" +
+            req.params.id);
     } catch (err) {
         res.status(500).send("User not found / you not authorize");
     }
 });
 
+
+
+
 module.exports = router;
+
+
+// // Update user by ID
+// router.patch("/users/:id", auth, async(req, res) => {
+//     const updates = Object.keys(req.body);
+//     const allowedUpdates = ["firstName", "lastName", "password", "email", "photoProfile"];
+//     const isValidOperation = updates.every((update) =>
+//         allowedUpdates.includes(update)
+//     );
+//     if (!isValidOperation) {
+//         return res.status(400).send();
+//     }
+
+//     try {
+//         const user = await User.findById(req.params.id);
+//         updates.forEach((update) => (user[update] = req.body[update]));
+
+//         await user.save();
+//         user ? res.status(200).send(user) : res.status(404).send();
+//     } catch (err) {
+//         res.status(500).send(err.message);
+//     }
+// });

@@ -1,31 +1,31 @@
 const mongoose = require('mongoose');
 
 const classSchema = new mongoose.Schema({
-    classname: {
+    className: {
         type: String,
         required: [true, "Please input class name!"]
     },
-    classtopic: {
+    classTopic: {
         type: String,
         required: [true, "Please input class topic!"]
     },
-    classdetail: {
+    classDetail: {
         type: String,
         required: [true, "Please input class detail!"]
     },
-    classphoto: {
+    classPhoto: {
         typpe: String,
         required: [true, "Please upload class photo!"]
     },
-    classstatus: {
+    classStatus: {
         type: Boolean,
         default: false
     },
-    classstart: {
+    classStart: {
         type: String,
         required: [true, "Please input date class started!"]
     },
-    classend: {
+    classEnd: {
         type: String,
         required: [true, "Please input date class ended!"]
     },
