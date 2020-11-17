@@ -68,9 +68,9 @@ classRouter.post("/class/upload", auth, checkRole('teacher'), upload.single('pho
 })
 
 classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
-    //console.log(auth.token)
     try {
 
+        //createclass
         const classs = new Class({
             ...req.body
         });
