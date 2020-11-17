@@ -50,12 +50,12 @@ enrolClassRouter.post("/class/enroll", auth, checkRole('learner', 'teacher'), as
             message: "Enroled Class successfully",
             Createdclass: {
                 _id: Enroled._id,
-                classid: Class.class_id,
-                teacherd: Enroled.teacherid,
-                learnind: Enroled.learnid,
-                topicid: Enroled.topicid,
+                classId: Class.class_id,
+                teacherId: Enroled.teacherId,
+                learnId: Enroled.learnId,
+                topicId: Enroled.topicId,
                 jadwal: Enroled.jadwal,
-                statusenroled: Enroled.statusenroled,
+                statusEnroled: Enroled.statusEnroled,
             }
         });
     } catch (err) {
@@ -64,7 +64,7 @@ enrolClassRouter.post("/class/enroll", auth, checkRole('learner', 'teacher'), as
 });
 
 // Delete topic
-enrolClassRouter.delete("/enroledclass/:id", auth, checkRole('learner'), async(req, res) => {
+enrolClassRouter.delete("/enroledClass/:id", auth, checkRole('learner'), async(req, res) => {
     const enroled = await Enroled.findByIdAndDelete(req.params.id);
     try {
         enroled ? res.status(204).send(enroled) : res.status(404).send();
@@ -74,7 +74,7 @@ enrolClassRouter.delete("/enroledclass/:id", auth, checkRole('learner'), async(r
 });
 
 //get all list for enrol
-enrolClassRouter.get("/enroledclass/all", auth, checkRole('learner'), async(req, res) => {
+enrolClassRouter.get("/enroledClass/all", auth, checkRole('learner'), async(req, res) => {
     try {
         const enroled = await Enroled.find({});
         enroled ? res.status(200).json({

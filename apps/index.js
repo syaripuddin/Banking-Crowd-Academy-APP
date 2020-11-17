@@ -2,6 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 require("./databases/database");
 const userRouter = require("./routers/user");
+const classRouter = require("./routers/class");
+const topicRouter = require("./routers/topic");
+const enrolClassRouter = require("./routers/enroledClass");
 const bodyParser = require("body-parser");
 const auth = require("./middleware/auth");
 
@@ -22,8 +25,11 @@ const port = process.env.PORT || 3000;
 //for debuggin wiht morgan
 app.use(morgan("dev"));
 
-//controller user
+//controller 
 app.use(userRouter);
+app.use(classRouter);
+app.use(topicRouter);
+app.use(enrolClassRouter);
 
 
 const Checkverify = (...statususer) => {

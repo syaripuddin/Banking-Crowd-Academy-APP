@@ -28,10 +28,10 @@ topicRouter.post("/topic/", auth, checkRole('teacher'), async(req, res) => {
             message: "Created topic successfully",
             Createdclass: {
                 _id: Topic._id,
-                classid: Topic.class_id,
-                topicname: Topic.topicname,
-                topicdetail: Topic.topicdetail,
-                topicdocument: Topic.topicdocument,
+                classId: Topic.class_id,
+                topicName: Topic.topicName,
+                topicDetail: Topic.topicDetail,
+                topicDocument: Topic.topicDocument,
             }
         });
     } catch (err) {
@@ -42,7 +42,7 @@ topicRouter.post("/topic/", auth, checkRole('teacher'), async(req, res) => {
 // Update topic by ID for teacher
 topicRouter.patch("/topic/:id", auth, checkRole('teacher'), async(req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["topicname", "topicdetail", "topicdocument"];
+    const allowedUpdates = ["topicName", "topicDetail", "topicDocument"];
     const isValidOperation = updates.every((update) =>
         allowedUpdates.includes(update)
     );
