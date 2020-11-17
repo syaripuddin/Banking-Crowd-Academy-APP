@@ -28,10 +28,10 @@ topicRouter.post("/topic/", auth, checkRole('teacher'), async(req, res) => {
             message: "Created topic successfully",
             Createdclass: {
                 _id: Topic._id,
-                classid: Topic.class_id,
-                topicname: Topic.topicname,
-                topicdetail: Topic.topicdetail,
-                topicdocument: Topic.topicdocument,
+                classId: Topic.class_id,
+                topicName: Topic.topicName,
+                topicDetail: Topic.topicDetail,
+                topicDocument: Topic.topicDocument,
             }
         });
     } catch (err) {

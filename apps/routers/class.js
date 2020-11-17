@@ -87,11 +87,11 @@ classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
             message: "Created class successfully",
             Createdclass: {
                 _id: Class._id,
-                classname: Class.className,
-                classdetail: Class.classDetail,
-                classstart: Class.classStart,
-                classend: Class.classEnd,
-                classphoto: {
+                className: Class.className,
+                classDetail: Class.classDetail,
+                classStart: Class.classStart,
+                classEnd: Class.classEnd,
+                classPhoto: {
                     type: 'GET',
                     url: "http://localhost:3000/class/" + classname._id
                 }
@@ -144,7 +144,7 @@ classRouter.delete("/class/:id", auth, checkRole('teacher'), async(req, res) => 
 });
 
 //get all list detail  buat dashboard home
-classRouter.get("/class/all", auth, async(req, res) => {
+classRouter.get("dashboard/class/all", auth, async(req, res) => {
     try {
         const classs = await Class.find({});
         classs ? res.status(200).json({
@@ -168,7 +168,7 @@ classRouter.get("/class/all", auth, async(req, res) => {
         const classs = await Class.find({});
         classs ? res.status(200).json({
             class_id: classs._id,
-            classname: classs.classname
+            className: classs.className
         }) : res.status(404).send();
     } catch (err) {
         res.status(500).send(err.message);
