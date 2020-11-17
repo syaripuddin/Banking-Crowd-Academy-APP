@@ -78,8 +78,8 @@ classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
 
 
         const enroled = new Enroled({
-            teacherid = req.body.teacherid,
-            classid = Class._id
+            teacherId = req.body.teacherId,
+            classId = Class._id
         })
         await enroled.save();
 
@@ -168,7 +168,9 @@ classRouter.get("/class/all", auth, async(req, res) => {
         const classs = await Class.find({});
         classs ? res.status(200).json({
             class_id: classs._id,
+
             className: classs.className
+
         }) : res.status(404).send();
     } catch (err) {
         res.status(500).send(err.message);
