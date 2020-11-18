@@ -52,7 +52,7 @@ enrolClassRouter.post("/class/enroll", auth, checkRole('learner', 'teacher'), as
     }
 });
 
-// Delete topic
+// Delete enrol
 enrolClassRouter.delete("/enroledClass/:id", auth, checkRole('learner'), async(req, res) => {
     const enroled = await Enroled.findByIdAndDelete(req.params.id);
     try {
@@ -74,5 +74,17 @@ enrolClassRouter.get("/enroledClass/all", auth, checkRole('learner'), async(req,
     }
 });
 
+
+// kelas ku / narik kelas pake parameter learnId yang di dapat dari token
+enrolClassRouter.get("/enroledClass/me", auth, checkRole('learner'), async(req, res) => {
+    try {
+        const enroled = await Enroled.find({ learnId: req.user._id });
+        enroled ? res.status(200).json({
+            enroled
+        }) : res.status(404).send();
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
 
 module.exports = enrolClassRouter;

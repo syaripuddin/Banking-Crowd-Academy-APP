@@ -73,11 +73,15 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    // class: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "class"
+    // }]
 
 }, { timestamps: true });
 
 
-
+//generate token
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
     const token = jwt.sign({ _id: user._id.toString() }, "DTS02PASTIBISA", {

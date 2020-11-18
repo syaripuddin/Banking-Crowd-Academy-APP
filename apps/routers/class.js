@@ -1,7 +1,6 @@
 const express = require("express");
 const Class = require("../models/class");
 const Enroled = require("../models/enroledclass");
-const multer = require('multer');
 const auth = require("../middleware/auth");
 
 
@@ -9,33 +8,7 @@ const auth = require("../middleware/auth");
 const classRouter = express.Router();
 
 
-//multer setup output dan filename   //upload masih lokal
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, "./uploads/"); //masih lokal
-    },
-    filename: function(req, file, cb) {
-        cb(null, Date.now() + file.originalname);
-    },
-});
 
-//filter image only
-const fileFilter = (req, file, cb) => {
-    // reject a file
-    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
-//multer upload
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 1024 * 1024 * 5
-    },
-    fileFilter: fileFilter,
-});
 
 //check role
 const checkRole = (...roles) => { //...spread operator extrak isi array 
@@ -48,24 +21,6 @@ const checkRole = (...roles) => { //...spread operator extrak isi array
     };
 };
 
-//upload photo
-classRouter.post("/class/upload", auth, checkRole('teacher'), upload.single('photo'), (req, res, next) => {
-    // console.log(req.file);
-    if (!req.file) {
-        res.status(500);
-        return next(Error);
-    }
-    res.status(201).json({
-        message: "Upload Class Photo successfully",
-        pathphoto: req.file.path,
-        ViewPhoto: {
-            request: {
-                type: 'GET',
-                url: 'http://localhost:3000/uploads/' + req.file.filename //masih lokal
-            }
-        }
-    })
-})
 
 classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
     try {

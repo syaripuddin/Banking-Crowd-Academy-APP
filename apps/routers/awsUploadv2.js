@@ -5,6 +5,8 @@ const multer = require('multer');
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage });
 
+const auth = require("../middleware/auth");
+
 const awsConfig = require("../config");
 
 const s3Client = new AWS.S3({
@@ -13,8 +15,9 @@ const s3Client = new AWS.S3({
     region: awsConfig.region
 });
 
+//console.log(awsConfig)
 const uploadParams = {
-    Bucket: awsConfig,
+    Bucket: awsConfig.BUCKET_NAME,
     Key: '', // pass key
     Body: null, // pass file body
 };
@@ -22,7 +25,7 @@ const uploadParams = {
 
 const router = express.Router();
 
-router.post('api/file/upload', upload.single("file"), (req, res) => {
+router.post('/api/file/upload', auth, upload.single("file"), (req, res) => {
     const params = uploadParams;
 
     uploadParams.Key = req.file.originalname;
@@ -40,4 +43,4 @@ router.post('api/file/upload', upload.single("file"), (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = router
