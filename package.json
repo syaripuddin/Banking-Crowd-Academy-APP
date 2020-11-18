@@ -19,6 +19,7 @@
     },
     "homepage": "https://github.com/DTS02/Banking-Crowd-Academy-APP#readme",
     "dependencies": {
+        "aws-sdk": "^2.794.0",
         "bcryptjs": "^2.4.3",
         "express": "^4.17.1",
         "express-fileupload": "^1.2.0",
