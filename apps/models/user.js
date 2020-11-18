@@ -73,6 +73,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    // class: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "class"
+    // }]
 
 }, { timestamps: true });
 

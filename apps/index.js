@@ -5,6 +5,7 @@ const userRouter = require("./routers/user");
 const classRouter = require("./routers/class");
 const topicRouter = require("./routers/topic");
 const uploadaws = require("./routers/awsUploadv2");
+const dashboard = require("./routers/dashboardAdmin");
 
 const enrolClassRouter = require("./routers/enroledClass");
 const bodyParser = require("body-parser");
@@ -32,6 +33,7 @@ app.use(classRouter);
 app.use(topicRouter);
 app.use(enrolClassRouter);
 app.use(uploadaws);
+app.use(dashboard);
 
 const Checkverify = (...statususer) => {
     return (req, res, next) => {
