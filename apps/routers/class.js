@@ -1,6 +1,6 @@
 const express = require("express");
 const Class = require("../models/class");
-const Enroled = require("../models/enroledclass")
+const Enroled = require("../models/enroledclass");
 const multer = require('multer');
 const auth = require("../middleware/auth");
 
@@ -75,30 +75,19 @@ classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
             ...req.body
         });
         await classs.save();
+        console.log(req.body.teacherId + Class._id)
 
 
-        const enroled = new Enroled({
-            teacherid = req.body.teacherid,
-            classid = Class._id
+        const enroledClass = new Enroled({
+            teacherId: req.body.teacherId,
+            classId: Class._id
         })
-        await enroled.save();
+        await enroledClass.save();
 
-        res.status(201).json({
-            message: "Created class successfully",
-            Createdclass: {
-                _id: Class._id,
-                className: Class.className,
-                classDetail: Class.classDetail,
-                classStart: Class.classStart,
-                classEnd: Class.classEnd,
-                classPhoto: {
-                    type: 'GET',
-                    url: "http://localhost:3000/class/" + classname._id
-                }
-            }
-        });
+
+        res.status(201).send({Class})
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(err.message);
     }
 
 });
@@ -119,6 +108,16 @@ classRouter.patch("/class/:id", auth, checkRole('teacher'), async(req, res) => {
         updates.forEach((update) => (classs[update] = req.body[update]));
 
         await classs.save();
+        res.status(200).send({Class})
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+
+    /*try {
+        const classs = await Class.findById(req.params.id);
+        updates.forEach((update) => (classs[update] = req.body[update]));
+
+        await classs.save();
         classs ? res.status(200).json({
             classs,
             ViewPhoto: {
@@ -127,10 +126,10 @@ classRouter.patch("/class/:id", auth, checkRole('teacher'), async(req, res) => {
                     url: 'http://localhost:3000/uploads/' + classname.classphoto
                 }
             }
-        }) : res.status(404).send();
+        }) : res.status(404).send(err.message);
     } catch (err) {
         res.status(500).send(err.message);
-    }
+    }*/
 });
 
 // Delete class
@@ -144,7 +143,7 @@ classRouter.delete("/class/:id", auth, checkRole('teacher'), async(req, res) => 
 });
 
 //get all list detail  buat dashboard home
-classRouter.get("dashboard/class/all", auth, async(req, res) => {
+classRouter.get("/dashboard/class/all", auth, async(req, res) => {
     try {
         const classs = await Class.find({});
         classs ? res.status(200).json({
@@ -155,7 +154,7 @@ classRouter.get("dashboard/class/all", auth, async(req, res) => {
                     url: 'http://localhost:3000/uploads/' + classs.classphoto
                 }
             }
-        }) : res.status(404).send();
+        }) : res.status(404).send(err.message);
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -167,9 +166,10 @@ classRouter.get("/class/all", auth, async(req, res) => {
     try {
         const classs = await Class.find({});
         classs ? res.status(200).json({
-            class_id: classs._id,
-            className: classs.className
-        }) : res.status(404).send();
+           classs
+
+          
+        }) : res.status(404).send(err.message);
     } catch (err) {
         res.status(500).send(err.message);
     }

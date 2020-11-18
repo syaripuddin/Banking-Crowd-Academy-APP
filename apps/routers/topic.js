@@ -42,7 +42,7 @@ topicRouter.post("/topic/", auth, checkRole('teacher'), async(req, res) => {
 // Update topic by ID for teacher
 topicRouter.patch("/topic/:id", auth, checkRole('teacher'), async(req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["topicname", "topicdetail", "topicdocument"];
+    const allowedUpdates = ["topicName", "topicDetail", "topicDocument"];
     const isValidOperation = updates.every((update) =>
         allowedUpdates.includes(update)
     );
