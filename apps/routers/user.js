@@ -2,6 +2,9 @@ const express = require("express");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
 
+
+
+
 const router = express.Router();
 
 //untuk cek role
@@ -157,6 +160,20 @@ router.delete("/users/:id", auth, CheckRole("admin"), async(req, res) => {
         res.status(500).send("User not found / you not authorize");
     }
 });
+
+
+router.get("/users/verification/?token", auth, (req, res) => {
+
+
+
+    res.send(req.user);
+
+});
+
+
+// func email verifikasi
+
+
 
 
 
