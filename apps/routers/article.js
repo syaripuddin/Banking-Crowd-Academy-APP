@@ -22,7 +22,7 @@ const checkRole = (...roles) => { //...spread operator extrak isi array
     };
 };
 
-
+//add article
 articleRouter.post("/article/", auth, checkRole('teacher'), async(req, res) => {
     try {
 
