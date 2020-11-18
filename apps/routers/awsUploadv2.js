@@ -1,24 +1,28 @@
 const express = require("express");
-const router = express.Router();
+
 const AWS = require('aws-sdk');
 const multer = require('multer');
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage });
 
+const awsConfig = require("../config");
+
 const s3Client = new AWS.S3({
-    accessKeyId: 'AKIAVNHUZ3Q5MEDGTGPJ',
-    secretAccessKey: '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',
-    region: 'ap-southeast-1'
+    accessKeyId: awsConfig.AWS_ID,
+    secretAccessKey: awsConfig.AWS_SECRET,
+    region: awsConfig.region
 });
 
 const uploadParams = {
-    Bucket: 'dts02bcaa',
+    Bucket: awsConfig,
     Key: '', // pass key
     Body: null, // pass file body
 };
 
 
-router.post('/api/file/upload', upload.single("file"), (req, res) => {
+const router = express.Router();
+
+router.post('api/file/upload', upload.single("file"), (req, res) => {
     const params = uploadParams;
 
     uploadParams.Key = req.file.originalname;
