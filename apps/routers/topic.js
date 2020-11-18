@@ -8,7 +8,7 @@ const topicRouter = express.Router();
 const checkRole = (...roles) => { //...spread operator extrak isi array 
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return res.send(403) // error fobbriden
+            return res.send(403) // error forbidden
         }
 
         next();
@@ -20,29 +20,22 @@ topicRouter.post("/topic/", auth, checkRole('teacher'), async(req, res) => {
     // console.log(auth.token)
     try {
 
-        const topic = new({
+        const topic = new Topic({
             ...req.body //need 
         });
         await topic.save();
-        res.status(201).json({
-            message: "Created topic successfully",
-            Createdclass: {
-                _id: Topic._id,
-                classId: Topic.class_id,
-                topicName: Topic.topicName,
-                topicDetail: Topic.topicDetail,
-                topicDocument: Topic.topicDocument,
-            }
-        });
+
+        res.status(201).send({ Topic });
+
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(err.message);
     }
 });
 
 // Update topic by ID for teacher
 topicRouter.patch("/topic/:id", auth, checkRole('teacher'), async(req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["topicName", "topicDetail", "topicDocument"];
+    const allowedUpdates = ["classId", "topicName", "topicDetail", "topicDocument"];
     const isValidOperation = updates.every((update) =>
         allowedUpdates.includes(update)
     );
@@ -57,7 +50,7 @@ topicRouter.patch("/topic/:id", auth, checkRole('teacher'), async(req, res) => {
         await topic.save();
         topic ? res.status(200).json({
             topic
-        }) : res.status(404).send();
+        }) : res.status(404).send(err.message);
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -69,12 +62,12 @@ topicRouter.delete("/topic/:id", auth, checkRole('teacher'), async(req, res) => 
     try {
         topic ? res.status(204).send(topic) : res.status(404).send();
     } catch (err) {
-        res.status(500).send(err.message);
+        res.status(500).send();
     }
 });
 
 //get all list topic
-topicRouter.get("/topic/all", auth, async(req, res) => {
+topicRouter.get("/class/topic/all", auth, async(req, res) => {
     try {
         const topic = await Topic.find({});
         topic ? res.status(200).json({
@@ -91,9 +84,7 @@ topicRouter.get("/topic/all", auth, async(req, res) => {
     try {
         const topic = await Topic.find({});
         topic ? res.status(200).json({
-            topic_id: topic._id,
-            topicname: topic.topicname,
-            topicdetail: topic.topicdetail,
+            topic
         }) : res.status(404).send();
     } catch (err) {
         res.status(500).send(err.message);

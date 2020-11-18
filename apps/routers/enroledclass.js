@@ -18,7 +18,7 @@ const checkRole = (...roles) => { //...spread operator extrak isi array
 };
 
 //get id learner
-enrolClassRouter.get("/users/learner", auth, checkRole("learner"), async(req, res) => {
+enrolClassRouter.get("/users/learner", auth, checkRole('learner'), async(req, res) => {
     const users = await User.find({});
     try {
         users.length === 0 ? res.status(404).send() : res.send(users);
@@ -28,12 +28,12 @@ enrolClassRouter.get("/users/learner", auth, checkRole("learner"), async(req, re
 });
 
 //get id teacher
-enrolClassRouter.get("/users/teacher", auth, checkRole("teacher"), async(req, res) => {
+enrolClassRouter.get("/users/teacher", auth, checkRole('teacher'), async(req, res) => {
     const users = await User.find({});
     try {
         users.length === 0 ? res.status(404).send() : res.send(users);
     } catch (err) {
-        res.status(500).send("err.message");
+        res.status(500).send(err.message);
     }
 });
 
@@ -46,20 +46,9 @@ enrolClassRouter.post("/class/enroll", auth, checkRole('learner', 'teacher'), as
             ...req.body //need 
         });
         await enrole.save();
-        res.status(201).json({
-            message: "Enroled Class successfully",
-            Createdclass: {
-                _id: Enroled._id,
-                classId: Class.class_id,
-                teacherId: Enroled.teacherId,
-                learnId: Enroled.learnId,
-                topicId: Enroled.topicId,
-                jadwal: Enroled.jadwal,
-                statusEnroled: Enroled.statusEnroled,
-            }
-        });
+        res.status(201).send({Enroled});
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(err.message);
     }
 });
 
