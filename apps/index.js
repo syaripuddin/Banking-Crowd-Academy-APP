@@ -4,15 +4,15 @@ require("./databases/database");
 const userRouter = require("./routers/user");
 const classRouter = require("./routers/class");
 const topicRouter = require("./routers/topic");
+const uploadaws = require("./routers/awsUploadv2");
 const enrolClassRouter = require("./routers/enroledClass");
 const bodyParser = require("body-parser");
 const auth = require("./middleware/auth");
+//const send = require('./middleware/awsUpload');
 
 //app assign express
 const app = express();
 
-//app.use(fileupload());
-app.use('/uploads', express.static('uploads'));
 
 // parse application/x-www-form-urlencoded 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,9 +27,10 @@ app.use(morgan("dev"));
 
 //controller 
 app.use(userRouter);
-//app.use(classRouter);
+app.use(classRouter);
 app.use(topicRouter);
 app.use(enrolClassRouter);
+app.use(uploadaws);
 
 
 const Checkverify = (...statususer) => {
