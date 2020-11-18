@@ -1,3 +1,7 @@
 module.exports = {
-    mongoURI: 'mongodb+srv://admin:admintampan@bcaadts02.xejsv.mongodb.net/BCAA?retryWrites=true&w=majority'
+    mongoURI: '',
+    AWS_ID: '',
+    AWS_SECRET: '',
+    BUCKET_NAME: '',
+    region: ''
 }

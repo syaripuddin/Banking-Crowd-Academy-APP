@@ -1,10 +1,10 @@
 const express = require("express");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
-const { update } = require("../models/user");
 
 const router = express.Router();
 
+//untuk cek role
 const CheckRole = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
@@ -14,6 +14,7 @@ const CheckRole = (...roles) => {
         next(); // lanjut 
     };
 };
+
 
 // Create User
 router.post("/users", async(req, res) => {
@@ -26,6 +27,10 @@ router.post("/users", async(req, res) => {
         res.status(400).send(err);
     }
 });
+
+
+
+
 
 // Login User
 router.post("/users/login", async(req, res) => {

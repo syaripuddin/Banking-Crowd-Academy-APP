@@ -85,7 +85,7 @@ classRouter.post("/class/", auth, checkRole('teacher'), async(req, res) => {
         await enroledClass.save();
 
 
-        res.status(201).send({Class})
+        res.status(201).send({ Class })
     } catch (err) {
         res.status(400).send(err.message);
     }
@@ -108,28 +108,12 @@ classRouter.patch("/class/:id", auth, checkRole('teacher'), async(req, res) => {
         updates.forEach((update) => (classs[update] = req.body[update]));
 
         await classs.save();
-        res.status(200).send({Class})
+        res.status(200).send({ Class })
     } catch (err) {
         res.status(500).send(err.message);
     }
 
-    /*try {
-        const classs = await Class.findById(req.params.id);
-        updates.forEach((update) => (classs[update] = req.body[update]));
 
-        await classs.save();
-        classs ? res.status(200).json({
-            classs,
-            ViewPhoto: {
-                request: {
-                    type: 'GET',
-                    url: 'http://localhost:3000/uploads/' + classname.classphoto
-                }
-            }
-        }) : res.status(404).send(err.message);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }*/
 });
 
 // Delete class
@@ -166,9 +150,9 @@ classRouter.get("/class/all", auth, async(req, res) => {
     try {
         const classs = await Class.find({});
         classs ? res.status(200).json({
-           classs
+            classs
 
-          
+
         }) : res.status(404).send(err.message);
     } catch (err) {
         res.status(500).send(err.message);

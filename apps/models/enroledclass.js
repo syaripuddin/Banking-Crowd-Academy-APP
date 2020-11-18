@@ -28,4 +28,5 @@ const EnroledSchema = new mongoose.Schema({
 
 const Enroled = mongoose.model('Enroled', EnroledSchema);
 
+
 module.exports = Enroled;
